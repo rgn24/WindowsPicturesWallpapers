@@ -3,12 +3,29 @@ import os
 from PIL import Image
 import time
 
-src_dir_path = "C:\\Users\\jankr\\AppData\\Local\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets"
-dst_dir_path = "C:\\Users\\jankr\\Pictures\\WallpaperDia"
+#src_dir_path = "C:\\Users\\jankr\\AppData\\Local\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets"
+#dst_dir_path = "C:\\Users\\jankr\\Pictures\\WallpaperDia"
+
+
+
+#test_path = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+usr_path = os.environ['USERPROFILE']
+
+src_dir_path = usr_path + "\\AppData\\Local\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets"
+dst_dir_path = usr_path + "\\Pictures\\WallpaperDia"
+
+# Prints: C:\Users\sdkca\Desktop
+#print("The Desktop path is: " + test_path)
+
+
+
+#test_path = "C:\\Users\\%USERNAME%"
 
 #path = "C:\\Users\\janmk\\AppData\\Local\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets"
 dir_list = os.listdir(src_dir_path)
+#test_list = os.listdir(test_path)
 
+#print(test_list)
 
 def getDimensions(file_path):
     img = Image.open(file_path)
@@ -27,6 +44,8 @@ def constructFileStrings(file):
     src = src_dir_path + "\\" + file
     dst = dst_dir_path + "\\" + timestamp + "_" + str(count) + ".png"
     return src, dst
+
+
 
 count = 0
 for file in dir_list:
