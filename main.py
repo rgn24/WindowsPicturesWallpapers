@@ -3,29 +3,26 @@ import os
 from PIL import Image
 import time
 
-#src_dir_path = "C:\\Users\\jankr\\AppData\\Local\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets"
-#dst_dir_path = "C:\\Users\\jankr\\Pictures\\WallpaperDia"
 
-
-
-#test_path = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
 usr_path = os.environ['USERPROFILE']
 
 src_dir_path = usr_path + "\\AppData\\Local\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets"
 dst_dir_path = usr_path + "\\Pictures\\WallpaperDia"
 
-# Prints: C:\Users\sdkca\Desktop
-#print("The Desktop path is: " + test_path)
 
-
-
-#test_path = "C:\\Users\\%USERNAME%"
-
-#path = "C:\\Users\\janmk\\AppData\\Local\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets"
 dir_list = os.listdir(src_dir_path)
-#test_list = os.listdir(test_path)
 
-#print(test_list)
+def checkFolderExistance():
+    if not os.path.exists(dst_dir_path):
+        try:
+            os.mkdir(dst_dir_path)
+        except OSError:
+            print("Creation of the directory %s failed" % dst_dir_path)
+        else:
+            print("Successfully created the directory %s " % dst_dir_path)
+    else:
+        print("Folder already exist. Continuing extracting pictures.")
+
 
 def getDimensions(file_path):
     img = Image.open(file_path)
@@ -46,12 +43,13 @@ def constructFileStrings(file):
     return src, dst
 
 
-
-count = 0
-for file in dir_list:
-    timestamp = time.strftime("%Y%m%d")
-    src_file_path, dst_file_path = constructFileStrings(file)
-    x, y = getDimensions(src_file_path)
-    if isValid(x, y):
-        shutil.copyfile(src_file_path, dst_file_path)
-        count += 1
+if __name__ == "__main__":
+    checkFolderExistance()
+    count = 0
+    for file in dir_list:
+        timestamp = time.strftime("%Y%m%d")
+        src_file_path, dst_file_path = constructFileStrings(file)
+        x, y = getDimensions(src_file_path)
+        if isValid(x, y):
+            shutil.copyfile(src_file_path, dst_file_path)
+            count += 1
